@@ -51,5 +51,8 @@ MIT License, Eric V. Jang 2014
 
 See [INSTALL](INSTALL.md) text file.
 
-Continuous integration:
- - [![Build Status](https://travis-ci.org/EncovGroup/svd3.svg?branch=develop)](https://travis-ci.org/EncovGroup/svd3) develop branch.
+Continuous integration on develop branch:
+ - [![Build Status](http://travis-matrix-badges.herokuapp.com/repos/EncovGroup/svd3/branches/develop/1)](https://travis-ci.org/EncovGroup/svd3) ubuntu 14.04 g++ 4.8 and cuda 7.0.
+ - [![Build Status](http://travis-matrix-badges.herokuapp.com/repos/EncovGroup/svd3/branches/develop/2)](https://travis-ci.org/EncovGroup/svd3) ubuntu 14.04 g++ 4.8 and cuda 7.5.
+  - [![Build Status](http://travis-matrix-badges.herokuapp.com/repos/EncovGroup/svd3/branches/develop/3)](https://travis-ci.org/EncovGroup/svd3) ubuntu 14.04 g++ 4.8 and cuda 8.0.
+  - [![Build Status](http://travis-matrix-badges.herokuapp.com/repos/EncovGroup/svd3/branches/develop/4)](https://travis-ci.org/EncovGroup/svd3) ubuntu 14.04 clang 3.8 and cuda 8.0.
