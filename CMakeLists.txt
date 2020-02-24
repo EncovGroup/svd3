@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.1.3)
 project(SVD3 LANGUAGES C CXX VERSION 1.0.1)
 
 option(SVD3_BUILD_SAMPLES "Build samples" ON)
+option(SVD3_INSTALL_SAMPLE_FOR_VCPKG "Install the samples in a tool/svd3 folder as required by vcpkg" OFF)
 option(SVD3_EXPORT_PACKAGE "Export the library as cmake package" OFF)
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 option(SVD3_ENABLE_DEV_VERSIONING "[developers] It enables to version the binaries using the git hash as build version" OFF)
@@ -49,6 +50,14 @@ if(SVD3_ENABLE_DEV_VERSIONING)
     message(STATUS "SVD3_BUILD_VERSION ${SVD3_BUILD_VERSION}")
 endif()
 
+include(GNUInstallDirs)
+
+# where to install the samples. Vcpkg requires they are installed in tools/svd3
+set(SVD3_INSTALL_BINDIR ${CMAKE_INSTALL_BINDIR})
+if(SVD3_INSTALL_SAMPLE_FOR_VCPKG)
+    set(SVD3_INSTALL_BINDIR "tools/svd3")
+endif()
+
 find_package(CUDA 7.0 REQUIRED)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -92,7 +101,6 @@ cuda_find_library_local_first(CUDA_CUDADEVRT_LIBRARY cudadevrt "\"cudadevrt\" li
 
 # EXPORTING THE LIBRARY
 #
-include(GNUInstallDirs)
 # place to put the cmake-related files
 set(config_install_dir "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 # include directory for install
@@ -163,6 +171,9 @@ add_custom_target(SVD3_uninstall
 message("\n")
 message("** SVD3 version: " ${PROJECT_VERSION})
 message("** Building samples: " ${SVD3_BUILD_SAMPLES})
+if(SVD3_BUILD_SAMPLES)
+    message("** Installing samples in: " ${SVD3_INSTALL_BINDIR})
+endif()
 message("** Building shared library: " ${BUILD_SHARED_LIBS})
 message("** Requested GPU architectures: " ${SVD3_CUDA_ARCH})
 message("** Building for the following architectures: " ${SVD3_ARCH_FLAGS})
