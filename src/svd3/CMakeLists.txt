@@ -15,6 +15,7 @@ set_target_properties(SVD3
 
 target_compile_features(SVD3 PUBLIC cxx_std_11)
 set_target_properties(SVD3 PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(SVD3 PROPERTIES DEBUG_POSTFIX "d")
 
 # Targets:
 #   * header location after install: <prefix>/include/
