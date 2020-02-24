@@ -11,7 +11,7 @@ target_include_directories(SVD3 PUBLIC
 # the ".." is needed to build as dependency to be able to include as <SVD3/....>
 target_include_directories(SVD3 PUBLIC
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>
-        $<INSTALL_INTERFACE:include/>)
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/>)
 
 set_target_properties(SVD3
         PROPERTIES SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"

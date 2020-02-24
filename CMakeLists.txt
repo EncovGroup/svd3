@@ -83,9 +83,9 @@ cuda_find_library_local_first(CUDA_CUDADEVRT_LIBRARY cudadevrt "\"cudadevrt\" li
 #
 include(GNUInstallDirs)
 # place to put the cmake-related files
-set(config_install_dir "lib/cmake/${PROJECT_NAME}")
+set(config_install_dir "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 # include directory for install
-set(include_install_dir "include")
+set(include_install_dir "${CMAKE_INSTALL_INCLUDEDIR}")
 
 # build directory containing the generated files
 set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
