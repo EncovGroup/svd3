@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.3)
 
-project(SVD3 LANGUAGES C CXX VERSION 1.0.1)
+project(SVD3 LANGUAGES C CXX VERSION 1.0.2)
 
 option(SVD3_BUILD_SAMPLES "Build samples" ON)
 option(SVD3_INSTALL_SAMPLE_FOR_VCPKG "Install the samples in a tool/svd3 folder as required by vcpkg" OFF)
