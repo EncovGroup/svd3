@@ -4,21 +4,18 @@ set(SVD3_HEADESR svd3.h svd3_cuda/svd3_cuda.h)
 
 CUDA_ADD_LIBRARY(SVD3 ${SVD3_SOURCES} ${SVD3_HEADESR})
 
-target_include_directories(SVD3 PUBLIC
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>
-        $<INSTALL_INTERFACE:include/>)
-
 # the ".." is needed to build as dependency to be able to include as <SVD3/....>
 target_include_directories(SVD3 PUBLIC
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>
-        $<INSTALL_INTERFACE:include/>)
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/>)
 
-set_target_properties(SVD3
-        PROPERTIES SOVERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
-        VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
+set_target_properties(SVD3 PROPERTIES
+        SOVERSION "${SVD3_SOVERSION}"
+        VERSION "${SVD3_BUILD_VERSION}")
 
 target_compile_features(SVD3 PUBLIC cxx_std_11)
 set_target_properties(SVD3 PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(SVD3 PROPERTIES DEBUG_POSTFIX "d")
 
 # Targets:
 #   * header location after install: <prefix>/include/

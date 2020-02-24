@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.1.3)
 
-project(SVD3 LANGUAGES C CXX VERSION 1.0)
+project(SVD3 LANGUAGES C CXX VERSION 1.0.1)
 
 option(SVD3_BUILD_SAMPLES "Build samples" ON)
 option(SVD3_EXPORT_PACKAGE "Export the library as cmake package" OFF)
-option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(SVD3_ENABLE_DEV_VERSIONING "[developers] It enables to version the binaries using the git hash as build version" OFF)
 set(SVD3_CUDA_ARCH "Auto" CACHE STRING "Selects GPU arch flags for nvcc based on target_CUDA_architectures
         ['Auto'|'Common'|'All'|'Fermi Kepler Maxwell Kepler+Tegra Kepler+Tesla Maxwell+Tegra Pascal'|'2.0 2.1 3.0 etc']")
 
@@ -19,6 +20,10 @@ if(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} VERSION_LESS 3.10)
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compatibilityCUDA)
 endif()
 
+# Set build path as a folder named as the platform (linux, windows, darwin...) plus the processor type
+set(EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
+set(LIBRARY_OUTPUT_PATH "${PROJECT_BINARY_DIR}/${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
+
 if(BUILD_SHARED_LIBS)
     message(STATUS "BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS}")
     # Need to declare CUDA_USE_STATIC_CUDA_RUNTIME as an option to ensure that it is not overwritten in FindCUDA.
@@ -32,6 +37,15 @@ else()
     option(CUDA_USE_STATIC_CUDA_RUNTIME "Use the static version of the CUDA runtime library if available" ON)
     set(CUDA_USE_STATIC_CUDA_RUNTIME ON)
     set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
+endif()
+
+set(SVD3_BUILD_VERSION ${PROJECT_VERSION})
+set(SVD3_SOVERSION ${PROJECT_VERSION_MAJOR})
+
+if(SVD3_ENABLE_DEV_VERSIONING)
+    # this will append the current git hash to the full build version
+    include(cmake/gitHas.cmake)
+    message(STATUS "SVD3_BUILD_VERSION ${SVD3_BUILD_VERSION}")
 endif()
 
 find_package(CUDA 7.0 REQUIRED)
@@ -79,9 +93,9 @@ cuda_find_library_local_first(CUDA_CUDADEVRT_LIBRARY cudadevrt "\"cudadevrt\" li
 #
 include(GNUInstallDirs)
 # place to put the cmake-related files
-set(config_install_dir "lib/cmake/${PROJECT_NAME}")
+set(config_install_dir "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 # include directory for install
-set(include_install_dir "include")
+set(include_install_dir "${CMAKE_INSTALL_INCLUDEDIR}")
 
 # build directory containing the generated files
 set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
