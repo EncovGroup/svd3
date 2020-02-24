@@ -5,6 +5,7 @@ project(SVD3 LANGUAGES C CXX VERSION 1.0)
 option(SVD3_BUILD_SAMPLES "Build samples" ON)
 option(SVD3_EXPORT_PACKAGE "Export the library as cmake package" OFF)
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(SVD3_ENABLE_DEV_VERSIONING "[developers] It enables to version the binaries using the git hash as build version" OFF)
 set(SVD3_CUDA_ARCH "Auto" CACHE STRING "Selects GPU arch flags for nvcc based on target_CUDA_architectures
         ['Auto'|'Common'|'All'|'Fermi Kepler Maxwell Kepler+Tegra Kepler+Tesla Maxwell+Tegra Pascal'|'2.0 2.1 3.0 etc']")
 
@@ -40,6 +41,13 @@ endif()
 
 set(SVD3_BUILD_VERSION ${PROJECT_VERSION})
 set(SVD3_SOVERSION ${PROJECT_VERSION_MAJOR})
+
+if(SVD3_ENABLE_DEV_VERSIONING)
+    # this will append the current git hash to the full build version
+    include(cmake/gitHas.cmake)
+    message(STATUS "SVD3_BUILD_VERSION ${SVD3_BUILD_VERSION}")
+endif()
+
 find_package(CUDA 7.0 REQUIRED)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
