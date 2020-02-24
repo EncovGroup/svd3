@@ -39,6 +39,7 @@ else()
     set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
 endif()
 
+# set the version to use for the symlinks
 set(SVD3_BUILD_VERSION ${PROJECT_VERSION})
 set(SVD3_SOVERSION ${PROJECT_VERSION_MAJOR})
 
