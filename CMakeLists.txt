@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.3)
 
-project(SVD3 LANGUAGES C CXX VERSION 1.0)
+project(SVD3 LANGUAGES C CXX VERSION 1.0.1)
 
 option(SVD3_BUILD_SAMPLES "Build samples" ON)
 option(SVD3_EXPORT_PACKAGE "Export the library as cmake package" OFF)
