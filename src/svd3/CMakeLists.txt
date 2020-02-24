@@ -10,8 +10,8 @@ target_include_directories(SVD3 PUBLIC
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/>)
 
 set_target_properties(SVD3
-        VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
         PROPERTIES SOVERSION "${PROJECT_VERSION_MAJOR}"
+        VERSION "${PROJECT_VERSION}")
 
 target_compile_features(SVD3 PUBLIC cxx_std_11)
 set_target_properties(SVD3 PROPERTIES POSITION_INDEPENDENT_CODE ON)
